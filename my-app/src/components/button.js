@@ -1,8 +1,9 @@
+import handleClick from "../helper functions/handleclick";
 function Button() {
     return (
-        <>
-        <button></button>
-        </>
+        <div>
+        Upload or Update a <button id="schedulebtn" onClick={handleClick}>Schedule</button>
+        </div>
     )
 }
 export default Button;
