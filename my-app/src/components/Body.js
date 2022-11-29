@@ -5,18 +5,20 @@ import TMA from "./TMA"
 import TMB from "./TMB"
 import ReportChoices from "./ReportChoices"
 import RunReportsButton from "./RunReportsButton"
+import Dashboard from "./Dashboard"
 
 
 function Body() {
   return (
     <>
-    <ScheduleButton />
+    {/* <ScheduleButton />
     <StartDate />
     <EndDate />
     <TMA />
     <TMB />
     <ReportChoices />
-    <RunReportsButton />
+    <RunReportsButton /> */}
+    <Dashboard />
     </>
   )
 }
