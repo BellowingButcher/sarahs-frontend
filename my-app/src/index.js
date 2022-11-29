@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import Body from './components/Body';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
+import LogIn from './components/LogIn';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 // import ScheduleButton from './components/ScheduleButton';
@@ -18,7 +19,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <Body />
+    {/* <Body /> */}
+    <LogIn />
 
   </React.StrictMode>
   
