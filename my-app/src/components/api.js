@@ -1,5 +1,6 @@
 import axios from "axios";
-async function apiCall() {
+import { outlet } from "react-rounter-dom"
+async function postApiCall() {
   const api = await axios.post("");
   return api;
 }
