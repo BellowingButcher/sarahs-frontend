@@ -1,6 +1,6 @@
-import axios from 'axios';
-async function apiCall () {
-    const api = await axios.post("");
-    return (api)
+import axios from "axios";
+async function apiCall() {
+  const api = await axios.post("");
+  return api;
 }
-export default apiCall
+export default apiCall;

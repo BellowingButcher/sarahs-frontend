@@ -1,7 +1,5 @@
 function reportHandleClick() {
-  return (
-    console.log('Run reports button has been clicked')
-  )
+  return console.log("Run reports button has been clicked");
 }
 
-export default reportHandleClick
+export default reportHandleClick;
