@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Body from "./components/Body";
+// import Body from "./components/Body";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import LogIn from "./components/LogIn";
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
-import Root from "./routes/root";
+import { createBrowserRouter, RouterProvider, Route, Redirect } from "react-router-dom";
+// import Root from "./routes/root";
 import ErrorPage from "./error-page";
 // import Contact from "./routes/Contact";
 import Dashboard from "./components/Dashboard";
@@ -34,6 +34,7 @@ const router = createBrowserRouter([
   {
     path: "dashboard/",
     element: <Dashboard />,
+    errorElement: <ErrorPage />
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
