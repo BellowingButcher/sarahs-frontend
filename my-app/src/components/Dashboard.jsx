@@ -153,6 +153,7 @@ function Dashboard() {
         </nav>
         <div className="col">
           <p className="row bg-success">User's Name Here</p>
+          {/* <button>Log out</button> */}
         </div>
         <div>{/* TODO: CHARTS GO HERE */}</div>
       </div>

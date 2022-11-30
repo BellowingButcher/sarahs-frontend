@@ -4,6 +4,12 @@ import Body from "./components/Body";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import LogIn from "./components/LogIn";
+import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import Root from "./routes/root";
+import ErrorPage from "./error-page";
+// import Contact from "./routes/Contact";
+import Dashboard from "./components/Dashboard";
+import { GlobalProvider } from "./context/GlobalState";
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 // import ScheduleButton from './components/ScheduleButton';
@@ -14,12 +20,28 @@ import LogIn from "./components/LogIn";
 // import ReportChoices from './components/ReportChoices';
 // import RunReportsButton from './components/RunReportsButton';
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    // element: <Root />,
+    element: <LogIn />,
+    errorElement: <ErrorPage />,
+  },
+  // {
+  //   path: "contacts/:contactId",
+  //   element: <Contact />,
+  // },
+  {
+    path: "dashboard/",
+    element: <Dashboard />,
+  },
+]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    {/* <Body /> */}
-    <LogIn />
+    <GlobalProvider>
+      <RouterProvider router={router} />
+    </GlobalProvider>
   </React.StrictMode>
 );
 
