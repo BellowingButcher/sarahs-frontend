@@ -13,7 +13,7 @@ import RunReportsButton from "./RunReportsButton";
 function Dashboard() {
   const [state, dispatch] = useGlobalState();
   let authorizer = state.currentUser;
-  console.log(JSON.parse(JSON.stringify(authorizer)));
+  // console.log(JSON.parse(JSON.stringify(authorizer)));
   if (authorizer.token_type == "access") {
     return (
       <div className="container-fluid">
