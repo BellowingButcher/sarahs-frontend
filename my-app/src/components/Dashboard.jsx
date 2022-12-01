@@ -17,7 +17,7 @@ function Dashboard() {
   if (authorizer.token_type == "access") {
     return (
       <div className="container-fluid">
-        {/* <div className="row">
+        <div className="row">
           <nav
             id="sidebarMenu"
             className="col-md-3 col-lg-2 d-md-block sidebar collapse bg-success"
@@ -31,18 +31,17 @@ function Dashboard() {
                 <TMA />
                 <TMB />
                 <RunReportsButton />
-                </ul>
-                </div>
-                </nav>
-                <div className="col">
-                <p className="row bg-success">Hello, {authorizer.username}</p>
-                <a href="/">
-                <button onClick={authService.logout}>Log out</button>
-              </a> */}
-          {/* </div> */}
-          {/* <div>TODO: CHARTS GO HERE</div> */}
-        {/* </div> */}
-              <ScheduleButton />
+              </ul>
+            </div>
+          </nav>
+          <div className="col">
+            <p className="row bg-success">Hello, {authorizer.username}</p>
+            <a href="/">
+              <button onClick={authService.logout}>Log out</button>
+            </a>
+          </div>
+          <div>TODO: CHARTS GO HERE</div>
+        </div>
       </div>
     );
   } else return <Login />;
