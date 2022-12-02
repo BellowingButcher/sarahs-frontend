@@ -35,10 +35,14 @@ function Dashboard() {
             </div>
           </nav>
           <div className="col">
-            <p className="row bg-success">Hello, {authorizer.username}</p>
-            <a href="/">
-              <button onClick={authService.logout}>Log out</button>
-            </a>
+            <div className="row bg-success">
+              <p className="col">Hello, {authorizer.username}</p>
+              <div className="col">
+                <a href="/">
+                  <button onClick={authService.logout}>Log out</button>
+                </a>
+              </div>
+            </div>
           </div>
           <div>TODO: CHARTS GO HERE</div>
         </div>

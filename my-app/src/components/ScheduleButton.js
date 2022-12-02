@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function ScheduleButton() {
+  let stamp = Date.now();
   const [file, setFile] = useState("");
 
   const upload = () => {
     if (file == null) return;
     // 'file' comes from the Blob or File API
     const storage = getStorage();
-    // todo: prepend filename to include timestamp
-    const storageRef = ref(storage, "file.xls");
+    const storageRef = ref(storage, "file.xls" + stamp);
 
     uploadBytes(storageRef, file).then((snapshot) => {
       // todo: navigate or conditional render the success of the file being uploaded
@@ -19,6 +21,8 @@ function ScheduleButton() {
       console.log("Uploaded a file!");
     });
   };
+
+
 
   return (
     <div>
