@@ -56,7 +56,7 @@ const Login = () => {
     </div>
   );
 };
-
+export default Login;
 //   return (
 //     <div className="text-center col col-4">
 //       <main className="form-signin w-100 m-auto">
@@ -155,4 +155,4 @@ const Login = () => {
 //   );
 // };
 
-export default Login;
+
