@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { auth } from "../firebase";
 import {
   getStorage,
   ref,
+  uploadBytes,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
 
 // todo: When uploading a schedule after refresh the page state still contains that file
 //I need to make it to where after successful upload it clears the file state.
@@ -54,10 +56,6 @@ function ScheduleButton() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            axios.post(
-              "https://8000-bellowingbu-totaltimetr-y9izd4wroz0.ws-us77.gitpod.io/api/save/",
-              downloadURL
-            );
             console.log("File available at", downloadURL);
           });
           successNotify();
@@ -77,7 +75,7 @@ function ScheduleButton() {
           <input
             type="file"
             onChange={(e) => {
-              setFile(e.target.files[0]); //todo: use toast pop up to ask for being and end date of the schedule that is being uploaded
+              setFile(e.target.files[0]);
             }}
           />
           <button onClick={upload}>Upload</button>
