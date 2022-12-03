@@ -10,15 +10,96 @@ import {
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import toast, { Toaster } from "react-hot-toast";
+import request from "../services/api.request";
+import axios from "axios";
+import authHeader from "../services/auth.headers";
+import { API_URL, REFRESH_ENDPOINT } from "../services/auth.constants";
 
 // todo: When uploading a schedule after refresh the page state still contains that file
 //I need to make it to where after successful upload it clears the file state.
 
 function ScheduleButton() {
+  const client = axios.create({
+    baseURL: API_URL,
+  });
+
+  client.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      const originalRequest = error.config;
+
+      // Prevent infinite loops
+      if (
+        error.response.status === 401 &&
+        originalRequest.url === API_URL + REFRESH_ENDPOINT
+      ) {
+        window.location.href = "";
+        return Promise.reject(error);
+      }
+
+      if (
+        error.response.data.code === "token_not_valid" &&
+        error.response.status === 401 &&
+        error.response.statusText === "Unauthorized"
+      ) {
+        const user = localStorage.getItem("user");
+
+        if (user) {
+          const tokenParts = JSON.parse(atob(user.refresh.split(".")[1]));
+
+          // exp date in token is expressed in seconds, while now() returns milliseconds:
+          const now = Math.ceil(Date.now() / 1000);
+          console.log(tokenParts.exp);
+
+          if (tokenParts.exp > now) {
+            return client
+              .post(REFRESH_ENDPOINT, { refresh: user.refresh })
+              .then((response) => {
+                localStorage.setItem("user", response.data);
+
+                client.defaults.headers["Authorization"] =
+                  "Bearer " + response.data.access;
+                originalRequest.headers["Authorization"] =
+                  "Bearer " + response.data.access;
+
+                return client(originalRequest);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            console.log("Refresh token is expired", tokenParts.exp, now);
+            window.location.href = "";
+          }
+        } else {
+          console.log("Refresh token not available.");
+          window.location.href = "";
+        }
+      }
+
+      // specific error handling done elsewhere
+      return Promise.reject(error);
+    }
+  );
   const successNotify = () => toast.success("Successful Upload!");
   const failedNotify = () => toast.error("No File Selected!");
   let stamp = Date.now();
   const [file, setFile] = useState("");
+  async function saveSchedule(downloadURL) {
+    let options = {
+      url: "/save/", // just the endpoint
+      method: "post", // sets the method of the request
+      data: {
+        schedule: downloadURL,
+        uploaded_by: client,
+        beginning: "2022-11-06",
+        ending: "2022-11-13",
+        status: "True",
+      },
+    };
+    let resp = await request(options); // await the response and pass in this fancy object of request options
+    // setSomeState(resp.data) // set the response
+  }
 
   const upload = () => {
     if (file == null) {
@@ -57,6 +138,7 @@ function ScheduleButton() {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL);
+            saveSchedule(downloadURL);
           });
           successNotify();
           // todo: navigate or conditional render the success of the file being uploaded
