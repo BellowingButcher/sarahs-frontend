@@ -14,6 +14,7 @@ import request from "../services/api.request";
 import axios from "axios";
 import authHeader from "../services/auth.headers";
 import { API_URL, REFRESH_ENDPOINT } from "../services/auth.constants";
+import SaveSchedule from "./SaveSchedule";
 
 // todo: When uploading a schedule after refresh the page state still contains that file
 //I need to make it to where after successful upload it clears the file state.
@@ -69,11 +70,11 @@ function ScheduleButton() {
               });
           } else {
             console.log("Refresh token is expired", tokenParts.exp, now);
-            window.location.href = "";
+            window.location.href = "/";
           }
         } else {
           console.log("Refresh token not available.");
-          window.location.href = "";
+          window.location.href = "/";
         }
       }
 
@@ -85,22 +86,6 @@ function ScheduleButton() {
   const failedNotify = () => toast.error("No File Selected!");
   let stamp = Date.now();
   const [file, setFile] = useState("");
-  async function saveSchedule(downloadURL) {
-    let options = {
-      url: "/save/", // just the endpoint
-      method: "post", // sets the method of the request
-      data: {
-        schedule: downloadURL,
-        uploaded_by: client,
-        beginning: "2022-11-06",
-        ending: "2022-11-13",
-        status: "True",
-      },
-    };
-    let resp = await request(options); // await the response and pass in this fancy object of request options
-    // setSomeState(resp.data) // set the response
-  }
-
   const upload = () => {
     if (file == null) {
       return;
@@ -138,7 +123,19 @@ function ScheduleButton() {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL);
-            saveSchedule(downloadURL);
+            axios
+              .post(
+                "https://8000-bellowingbu-totaltimetr-y9izd4wroz0.ws-us77.gitpod.io/api/save/",
+                downloadURL,
+                {
+                  "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcwMTg0NTE3LCJpYXQiOjE2NzAxODA5MTcsImp0aSI6IjY1MTE5MzI0MTYyYjQ2NzI5MGE2MTBhY2MxNjA0ODNkIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlzX3RlYW1sZWFkZXIiOmZhbHNlLCJpc190ZWFtbWVtYmVyIjpmYWxzZX0.JLN9c6TtdZUw5VAqZNe1rj99rn7Po301pTdMZNCksK8'
+                }
+              )
+              .then((response) => {
+                console.log(response);
+              });
+
+            // <SaveSchedule downloadURL client/>;
           });
           successNotify();
           // todo: navigate or conditional render the success of the file being uploaded
