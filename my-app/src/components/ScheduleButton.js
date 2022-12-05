@@ -10,16 +10,19 @@ import {
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import toast, { Toaster } from "react-hot-toast";
+import request from "../services/api.request";
+import { useGlobalState } from "../context/GlobalState"
+import SaveSchedule from "./SaveSchedule";
 
 // todo: When uploading a schedule after refresh the page state still contains that file
 //I need to make it to where after successful upload it clears the file state.
 
 function ScheduleButton() {
+  const [ state, dispatch ] = useGlobalState()
   const successNotify = () => toast.success("Successful Upload!");
   const failedNotify = () => toast.error("No File Selected!");
   let stamp = Date.now();
   const [file, setFile] = useState("");
-
   const upload = () => {
     if (file == null) {
       return;
@@ -55,10 +58,23 @@ function ScheduleButton() {
         () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-          });
-          successNotify();
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              successNotify();
+              request({
+                url: '/save/',
+                method: 'POST',
+                data: {
+                  schedule: downloadURL,
+                  uploaded_by: state.currentUser.user_id,
+                  beginning: "2022-11-06",
+                  ending: "2022-11-13",
+                  status: "True",
+                }
+              })
+            });
+
           // todo: navigate or conditional render the success of the file being uploaded
           // get the path to the file after upload
           // store the path to the file in state
