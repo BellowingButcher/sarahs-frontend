@@ -13,7 +13,6 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -28,7 +27,7 @@ const Login = () => {
     });
   };
   return (
-    <div className="c-form">
+    <div className="c-form circularFont">
       <form onSubmit={handleLogin}>
         <div>
           <label htmlFor="username">Username:</label>
@@ -52,6 +51,7 @@ const Login = () => {
           />
         </div>
         <input type="submit" value="Sign in" />
+        {/* <button className="btn btn-success">Sign In</button> */}
       </form>
     </div>
   );
@@ -154,5 +154,3 @@ export default Login;
 //     </div>
 //   );
 // };
-
-

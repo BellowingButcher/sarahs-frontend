@@ -23,3 +23,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+hr {
+  height: 1px;
+  background-color: #006f51;
+  border: none;
+  opacity: 100;
+}
+
+svg {
+  margin-right: 4px;
+}
+
+@font-face {
+  font-family: corda;
+  src: url('../public/fonts/Corda-Medium.otf');
+}
+
+@font-face {
+  font-family: circular;
+  src: url('../public/fonts/CircularStd-Medium.otf');
+
+}
+
+.cordaFont {
+  font-family: corda;
+}
+
+.circularFont {
+  font-family: circular;
+}
