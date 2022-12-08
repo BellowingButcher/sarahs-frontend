@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import request from "../services/api.request";
+import ScheduleList from "./ScheduleList";
 
 function Filters() {
   const [objSchedules, setObjSchedules] = useState({});
@@ -7,6 +8,7 @@ function Filters() {
   const [end, setEnd] = useState();
   const [tma, setTma] = useState();
   const [tmb, setTmb] = useState();
+
   function filterButton() {
     console.log("you have pressed the run filters button");
     request({
@@ -159,7 +161,7 @@ function Filters() {
                 </button>
               </div>
             </div>
-            
+            <ScheduleList />
           </div>
         </div>
       </div>
