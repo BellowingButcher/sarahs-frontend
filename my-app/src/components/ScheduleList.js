@@ -1,64 +1,17 @@
 import ListItem from "./ListItem";
 
 function ScheduleList(props) {
-  //     let list = props.data;
-  //     let x = list.map(object => <ListItem key={object.id} item={object} />);
-  //     return(x)
-  // }
-  // export default ScheduleList
-  // let data = [];
-  // for (let x in props.data) {
-  //   data.push(x);
-  // }
-  // //   test = test.map((object) => <ListItem key={object.id} item={object} />);
-
   return (
-    <div className="list-group mx-0 pb-4 w-auto">
-    <div>
-      {props.data.map((object) => (
-        <ListItem key={object.id} item={object} />
-      ))}
-    </div>
-  </div>
+    <>
+      <div className="row list-group mx-0 pb-4 w-auto">
+        {props.data.map((object) => (
+          <ListItem key={object.id} item={object} />
+        ))}
+      </div>
+      <div className="row mx-0 pb-4 w-auto">
+          
+      </div>
+    </>
   );
 }
 export default ScheduleList;
-
-// let test = [
-//   {
-//     id: 25,
-//     schedule:
-//       "https://firebasestorage.googleapis.com/v0/b/total-time-tracker.appspot.com/o/file.xls1670420357902?alt=media&token=8b99b768-ec8b-4227-8a39-d95921ea8921",
-//     beginning: "2022-11-21T00:00:00Z",
-//     ending: "2022-11-26T00:00:00Z",
-//     status: true,
-//     uploaded_by: 1,
-//   },
-//   {
-//     id: 26,
-//     schedule:
-//       "https://firebasestorage.googleapis.com/v0/b/total-time-tracker.appspot.com/o/file.xls1670420812974?alt=media&token=f1ea4e43-a194-4e9c-9a49-a57b93ec219f",
-//     beginning: "2022-10-24T00:00:00Z",
-//     ending: "2022-10-29T00:00:00Z",
-//     status: true,
-//     uploaded_by: 1,
-//   },
-//   {
-//     id: 25,
-//     schedule:
-//       "https://firebasestorage.googleapis.com/v0/b/total-time-tracker.appspot.com/o/file.xls1670420357902?alt=media&token=8b99b768-ec8b-4227-8a39-d95921ea8921",
-//     beginning: "2022-11-21T00:00:00Z",
-//     ending: "2022-11-26T00:00:00Z",
-//     status: true,
-//     uploaded_by: 1,
-//   },
-//   {
-//     id: 26,
-//     schedule:
-//       "https://firebasestorage.googleapis.com/v0/b/total-time-tracker.appspot.com/o/file.xls1670420812974?alt=media&token=f1ea4e43-a194-4e9c-9a49-a57b93ec219f",
-//     beginning: "2022-10-24T00:00:00Z",
-//     ending: "2022-10-29T00:00:00Z",
-//     status: true,
-//     uploaded_by: 1,
-//   },
-// ];
