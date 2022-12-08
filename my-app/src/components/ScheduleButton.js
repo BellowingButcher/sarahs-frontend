@@ -3,34 +3,36 @@ import { auth } from "../firebase";
 import {
   getStorage,
   ref,
-  uploadBytes,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import toast, { Toaster } from "react-hot-toast";
 import request from "../services/api.request";
-import { useGlobalState } from "../context/GlobalState"
-import SaveSchedule from "./SaveSchedule";
-
+import { useGlobalState } from "../context/GlobalState";
+// import SaveSchedule from "./SaveSchedule";
 // todo: When uploading a schedule after refresh the page state still contains that file
 //I need to make it to where after successful upload it clears the file state.
 
 function ScheduleButton() {
-  const [ state, dispatch ] = useGlobalState()
+  const [state, dispatch] = useGlobalState();
   const successNotify = () => toast.success("Successful Upload!");
-  const failedNotify = () => toast.error("No File Selected!");
+  const failedNotify = () => toast.error("No file selected!");
+  const existsNotify = () =>
+    toast.error(
+      "A schedule containing these dates already exists! Try another or delete the existing schedule."
+    );
   let stamp = Date.now();
   const [file, setFile] = useState("");
   const upload = () => {
-    if (file == null) {
+    if (file === null) {
       return;
     } else {
       // 'file' comes from the Blob or File API
 
       const storage = getStorage();
-      const storageRef = ref(storage, "file.xls" + stamp);
+      const storageRef = ref(storage, stamp + 'file.xls');
 
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -49,6 +51,8 @@ function ScheduleButton() {
             case "running":
               console.log("Upload is running");
               break;
+            default:
+              break;
           }
         },
         (error) => {
@@ -58,64 +62,53 @@ function ScheduleButton() {
         () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref)
-            .then((downloadURL) => {
-              console.log("File available at", downloadURL);
-              successNotify();
-              request({
-                url: '/save/',
-                method: 'POST',
-                data: {
-                  schedule: downloadURL,
-                  uploaded_by: state.currentUser.user_id,
-                  beginning: "2022-11-06",
-                  ending: "2022-11-13",
-                  status: "True",
-                }
-              })
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            request({
+              url: "/save/",
+              method: "POST",
+              data: {
+                blob_name: storageRef,
+                schedule: downloadURL,
+                uploaded_by: state.currentUser.user_id,
+              },
+            }).then((res) => {
+              // existsNotify();
+              console.log(res);
             });
-
-          // todo: navigate or conditional render the success of the file being uploaded
-          // get the path to the file after upload
-          // store the path to the file in state
-          // console.log('successful upload');
+            //TODO:Make a conditional success notification of an upload to the models
+            // successNotify();
+          });
         }
       );
     }
   };
-
+  // if (message.includes("Schedule already exists")) {
+  //   return <OverRidePopUp />;
+  // } else {
   return (
     <div>
-      <li className="nav-item">
-        <div className="" aria-current="page" href="#">
+      <div className="pt-4" aria-current="page">
+        <div className="input-group mb-3">
+          {/* it is not updating the state of file on change here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
           <input
             type="file"
+            className="form-control"
             onChange={(e) => {
-              setFile(e.target.files[0]);
+              setFile(e.target.files[0])
             }}
           />
-          <button onClick={upload}>Upload</button>
-          <Toaster />
+          <label className="input-group-text bg-success">
+            <div className="text-white" onClick={upload}>
+              Upload
+            </div>
+          </label>
         </div>
-      </li>
+        <Toaster />
+      </div>
     </div>
   );
 }
-
-{
-  /* <>
-  <li className="nav-item">
-    <div className="" aria-current="page" href="#">
-      <input
-        type="file"
-        onChange={(e) => {
-          setFile(e.target.files[0]);
-        }}
-      />
-      <button onClick={upload}>Upload</button>
-    </div>
-  </li>
-</>; */
-}
+// }
 
 export default ScheduleButton;
