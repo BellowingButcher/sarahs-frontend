@@ -20,8 +20,10 @@ client.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error.response.data.code === "token_not_valid" &&
-      error.response.status === 401) {
+    if (
+      error.response.data.code === "token_not_valid" &&
+      error.response.status === 401
+    ) {
       const user = localStorage.getItem('user');
 
       if (user) {

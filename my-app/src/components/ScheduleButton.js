@@ -32,7 +32,7 @@ function ScheduleButton() {
       // 'file' comes from the Blob or File API
 
       const storage = getStorage();
-      const storageRef = ref(storage, "file.xls" + stamp);
+      const storageRef = ref(storage, stamp + 'file.xls');
 
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -73,7 +73,8 @@ function ScheduleButton() {
                 uploaded_by: state.currentUser.user_id,
               },
             }).then((res) => {
-              existsNotify();
+              // existsNotify();
+              console.log(res);
             });
             //TODO:Make a conditional success notification of an upload to the models
             // successNotify();
@@ -89,7 +90,14 @@ function ScheduleButton() {
     <div>
       <div className="pt-4" aria-current="page">
         <div className="input-group mb-3">
-          <input type="file" className="form-control" />
+          {/* it is not updating the state of file on change here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+          <input
+            type="file"
+            className="form-control"
+            onChange={(e) => {
+              setFile(e.target.files[0])
+            }}
+          />
           <label className="input-group-text bg-success">
             <div className="text-white" onClick={upload}>
               Upload
