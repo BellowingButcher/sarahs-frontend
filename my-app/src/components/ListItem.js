@@ -1,4 +1,19 @@
+import request from "../services/api.request";
+
 function ListItem(props) {
+  function deleteSchedule() {
+    request({
+      url: `/patch/${props.item.id}`,
+      method: "DELETE",
+      data: {
+        pk: props.item,
+      },
+    }).then((res) => {
+      // existsNotify();
+      console.log(res);
+    });
+    window.location.reload(false);
+  }
   let beginning = props.item.beginning;
   let ending = props.item.ending;
   function dateSplit(date) {
@@ -11,22 +26,30 @@ function ListItem(props) {
   beginning = dateSplit(beginning);
   ending = dateSplit(ending);
   return (
-    <div className="pb-2">
-      <label className="list-group-item d-flex gap-2">
-        <div key={props.item.id}>
+    <div className="row pb-2">
+      <div className="d-flex gap-2" key={props.item.id}>
+        <div className="col-1">
           <input
-            className="form-check-input flex-shrink-0"
+            className="form-check-input flex-shrink-0 bg-success"
             type="checkbox"
             value=""
           />
-          <span>
-            Schedule from {beginning} through {ending}
-            <small className="d-block text-muted">
-              Would you like to remove this schedule?
-            </small>
-          </span>
         </div>
-      </label>
+
+        <div className="col-10">
+          Schedule from {beginning} through {ending}
+          <hr className="bg-success" />
+        </div>
+
+        <div className="col-1 mx-0 pb-4 w-auto ps-3">
+          <button
+            className="btn btn-sm btn-success active"
+            onClick={deleteSchedule}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
