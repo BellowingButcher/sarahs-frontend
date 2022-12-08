@@ -314,7 +314,14 @@ function Filters() {
                   </button>
                 </div>
               </div>
-              <ScheduleList data={objSchedules} />
+
+              <hr className="bg-success" />
+
+              <div className="row">
+                <div className="col d-flex mx-auto">
+                  <ScheduleList data={objSchedules} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
