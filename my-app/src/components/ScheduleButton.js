@@ -35,7 +35,6 @@ function ScheduleButton() {
     appId: process.env.REACT_APP_FB_APPID,
     measurementId: process.env.REACT_APP_FB_MEASUREMENTID,
   };
-  console.log(firebaseConfig);
   const app = initializeApp(firebaseConfig);
   const upload = () => {
     if (file === null) {
