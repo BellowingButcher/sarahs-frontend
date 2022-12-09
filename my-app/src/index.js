@@ -10,6 +10,7 @@ import ErrorPage from "./error-page";
 // import Contact from "./routes/Contact";
 import Dashboard from "./components/Dashboard";
 import { GlobalProvider } from "./context/GlobalState";
+import { Auth } from "firebase/auth";
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 // import ScheduleButton from './components/ScheduleButton';
@@ -42,6 +43,7 @@ root.render(
   <React.StrictMode>
     <GlobalProvider>
       <RouterProvider router={router} />
+      {/* <Dashboard /> */}
     </GlobalProvider>
   </React.StrictMode>
 );

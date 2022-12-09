@@ -10,6 +10,9 @@ import "reactjs-popup/dist/index.css";
 import toast, { Toaster } from "react-hot-toast";
 import request from "../services/api.request";
 import { useGlobalState } from "../context/GlobalState";
+import { Auth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 // todo: When uploading a schedule after refresh the page state still contains that file
 
 function ScheduleButton() {
@@ -22,6 +25,18 @@ function ScheduleButton() {
     );
   let stamp = Date.now();
   const [file, setFile] = useState("");
+
+  const firebaseConfig = {
+    apiKey: process.env.FB_API_KEY,
+    authDomain: process.env.FB_AUTHDOMAIN,
+    projectId: process.env.FB_PROJECTID,
+    storageBucket: process.env.FB_STORAGEBUCKET,
+    messagingSenderId: process.env.FB_MESSAGINGSENDERID,
+    appId: process.env.FB_APPID,
+    measurementId: process.env.FB_MEASUREMENTID,
+  };
+  console.log(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
   const upload = () => {
     if (file === null) {
       return;
