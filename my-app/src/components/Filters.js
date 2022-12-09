@@ -10,15 +10,17 @@ function Filters() {
   const [tma, setTma] = useState();
   const [tmb, setTmb] = useState();
 
-  function filterButton() {
-    request({
-      url: "/save/",
-      method: "GET",
-    }).then((res) => {
-      setObjSchedules(res.data);
-      setReportType("Schedules");
-    });
-  }
+    function filterButton() {
+
+      request({
+        url: "/save/",
+        method: "GET",
+      }).then((res) => {
+        console.log(res)
+        setObjSchedules(res.data);
+        setReportType("Schedules");
+      });
+    }
   if (reportType === "") {
     return (
       <>
@@ -96,6 +98,7 @@ function Filters() {
                 </div>
                 <div className="col-6">
                   <select name="reports" id="report-choice" className="pl-4">
+                  {/* <select onChange={(e)=>setReportType(e.target.value)} name="reports" id="report-choice" className="pl-4"> */}
                     <option value="">Select Report Type</option>
                     <option value="schedules">Schedules</option>
                     <option value="team members">Team Members</option>
@@ -243,7 +246,8 @@ function Filters() {
                   Reports:
                 </div>
                 <div className="col-6">
-                  <select name="reports" id="report-choice" className="pl-4">
+                <select name="reports" id="report-choice" className="pl-4">
+                {/* <select onChange={(e)=>setReportType(e.target.value)} name="reports" id="report-choice" className="pl-4"> */}
                     <option value="">Select Report Type</option>
                     <option value="schedules">Schedules</option>
                     <option value="team members">Team Members</option>

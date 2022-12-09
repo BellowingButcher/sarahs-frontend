@@ -10,7 +10,7 @@ function Dashboard() {
   const [state, dispatch] = useGlobalState();
   const [objSchedules, setObjSchedules] = useState([]);
   let authorizer = state.currentUser;
-  if (authorizer.token_type === "access") {
+  if (state.currentUserToken) {
     return (
       <div className="container">
         <div className="row">
