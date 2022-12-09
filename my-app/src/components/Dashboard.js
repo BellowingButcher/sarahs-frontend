@@ -1,31 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import authService from "../services/auth.service";
 import { useGlobalState } from "../context/GlobalState";
 import Login from "./LogIn";
 import ScheduleButton from "./ScheduleButton";
-import StartDate from "./StartDate";
-import EndDate from "./EndDate";
-import ReportChoices from "./ReportChoices";
-import TMA from "./TMA";
-import TMB from "./TMB";
-import RunReportsButton from "./RunReportsButton";
 import Filters from "./Filters";
-import request from "../services/api.request";
+
 
 function Dashboard() {
   const [state, dispatch] = useGlobalState();
   const [objSchedules, setObjSchedules] = useState([]);
-  // useEffect(() => {
-  //   request({
-  //     url: "/save/",
-  //     method: "GET",
-  //   }).then((res) => {
-  //     console.log(res.data);
-  //     setObjSchedules(res.data);
-  //   });
-  // }, []);
   let authorizer = state.currentUser;
-  // console.log(JSON.parse(JSON.stringify(authorizer)));
   if (authorizer.token_type === "access") {
     return (
       <div className="container">

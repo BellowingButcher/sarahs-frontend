@@ -11,16 +11,12 @@ function Filters() {
   const [tmb, setTmb] = useState();
 
   function filterButton() {
-    console.log("you have pressed the run filters button");
     request({
       url: "/save/",
       method: "GET",
     }).then((res) => {
-      console.log("res.data:", res.data);
       setObjSchedules(res.data);
-      console.log("setObjSchedules: ", objSchedules);
       setReportType("Schedules");
-      console.log("reportType: ", reportType);
     });
   }
   if (reportType === "") {

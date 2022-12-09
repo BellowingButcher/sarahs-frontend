@@ -1,19 +1,16 @@
-import { useState, useEffect } from "react";
-import { auth } from "../firebase";
+import { useState } from "react";
+
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-// import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import toast, { Toaster } from "react-hot-toast";
 import request from "../services/api.request";
 import { useGlobalState } from "../context/GlobalState";
-// import SaveSchedule from "./SaveSchedule";
 // todo: When uploading a schedule after refresh the page state still contains that file
-//I need to make it to where after successful upload it clears the file state.
 
 function ScheduleButton() {
   const [state, dispatch] = useGlobalState();
@@ -30,12 +27,9 @@ function ScheduleButton() {
       return;
     } else {
       // 'file' comes from the Blob or File API
-
       const storage = getStorage();
-      const storageRef = ref(storage, stamp + 'file.xls');
-
+      const storageRef = ref(storage, stamp + "file.xls");
       const uploadTask = uploadBytesResumable(storageRef, file);
-
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -56,14 +50,10 @@ function ScheduleButton() {
           }
         },
         (error) => {
-          // Handle unsuccessful uploads
           failedNotify();
         },
         () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
             request({
               url: "/save/",
               method: "POST",
@@ -73,30 +63,26 @@ function ScheduleButton() {
                 uploaded_by: state.currentUser.user_id,
               },
             }).then((res) => {
-              // existsNotify();
-              console.log(res);
+              if (res.data.errors) {
+                existsNotify();
+              } else {
+                successNotify();
+              }
             });
-            
-            //TODO:Make a conditional success notification of an upload to the models
-            // successNotify();
           });
         }
       );
     }
   };
-  // if (message.includes("Schedule already exists")) {
-  //   return <OverRidePopUp />;
-  // } else {
   return (
     <div>
       <div className="pt-4" aria-current="page">
         <div className="input-group mb-3">
-          {/* it is not updating the state of file on change here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
           <input
             type="file"
             className="form-control"
             onChange={(e) => {
-              setFile(e.target.files[0])
+              setFile(e.target.files[0]);
             }}
           />
           <label className="input-group-text bg-success">

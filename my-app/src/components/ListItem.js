@@ -9,7 +9,6 @@ function ListItem(props) {
         pk: props.item,
       },
     }).then((res) => {
-      // existsNotify();
       console.log(res);
     });
     window.location.reload(false);
