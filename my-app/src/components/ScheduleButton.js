@@ -27,13 +27,13 @@ function ScheduleButton() {
   const [file, setFile] = useState("");
 
   const firebaseConfig = {
-    apiKey: process.env.FB_API_KEY,
-    authDomain: process.env.FB_AUTHDOMAIN,
-    projectId: process.env.FB_PROJECTID,
-    storageBucket: process.env.FB_STORAGEBUCKET,
-    messagingSenderId: process.env.FB_MESSAGINGSENDERID,
-    appId: process.env.FB_APPID,
-    measurementId: process.env.FB_MEASUREMENTID,
+    apiKey: process.env.REACT_APP_FB_API_KEY,
+    authDomain: process.env.REACT_APP_FB_AUTHDOMAIN,
+    projectId: process.env.REACT_APP_FB_PROJECTID,
+    storageBucket: process.env.REACT_APP_FB_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_FB_MESSAGINGSENDERID,
+    appId: process.env.REACT_APP_FB_APPID,
+    measurementId: process.env.REACT_APP_FB_MEASUREMENTID,
   };
   console.log(firebaseConfig);
   const app = initializeApp(firebaseConfig);
