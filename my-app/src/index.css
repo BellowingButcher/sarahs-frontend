@@ -1,3 +1,15 @@
+:root {
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #006f51;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-success-rgb: 0, 111, 81;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +22,34 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+hr {
+  height: 1px;
+  background-color: #006f51;
+  border: none;
+  opacity: 100;
+}
+
+svg {
+  margin-right: 4px;
+}
+
+@font-face {
+  font-family: corda;
+  src: url('../public/fonts/Corda-Medium.otf');
+}
+
+@font-face {
+  font-family: circular;
+  src: url('../public/fonts/CircularStd-Medium.otf');
+
+}
+
+.cordaFont {
+  font-family: corda;
+}
+
+.circularFont {
+  font-family: circular;
 }
