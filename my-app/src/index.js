@@ -10,7 +10,8 @@ import ErrorPage from "./error-page";
 // import Contact from "./routes/Contact";
 import Dashboard from "./components/Dashboard";
 import { GlobalProvider } from "./context/GlobalState";
-import { Auth } from "firebase/auth";
+import { Auth, getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 // import ScheduleButton from './components/ScheduleButton';
@@ -20,7 +21,16 @@ import { Auth } from "firebase/auth";
 // import TMB from './components/TMB';
 // import ReportChoices from './components/ReportChoices';
 // import RunReportsButton from './components/RunReportsButton';
-
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_FB_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_FB_PROJECTID,
+  storageBucket: process.env.REACT_APP_FB_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FB_APPID,
+  measurementId: process.env.REACT_APP_FB_MEASUREMENTID,
+};
+const app = initializeApp(firebaseConfig);
 const router = createBrowserRouter([
   {
     path: "/",
