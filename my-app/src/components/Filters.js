@@ -26,7 +26,7 @@ function Filters() {
       });
     } else if (reportType === "team members"){
       request({
-        url: "/save/",
+        url: "/tmg/",
         method: "GET",
       }).then((res) => {
         setPage("team members");
