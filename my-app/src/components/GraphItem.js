@@ -15,7 +15,7 @@
 //   }
 //   export default GraphItem;
 //=================================================================================
-//bar graph here
+// bar graph here
 // import React from 'react';
 // import {
 //   Chart as ChartJS,
