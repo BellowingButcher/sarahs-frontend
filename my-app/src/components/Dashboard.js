@@ -1,10 +1,9 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import authService from "../services/auth.service";
 import { useGlobalState } from "../context/GlobalState";
 import Login from "./LogIn";
 import ScheduleButton from "./ScheduleButton";
 import Filters from "./Filters";
-
 
 function Dashboard() {
   const [state, dispatch] = useGlobalState();
@@ -38,9 +37,6 @@ function Dashboard() {
             <hr className="bg-success" />
             <Filters />
           </div>
-        </div>
-        <div className="">
-          <div className="col">TODO: CHARTS GO HERE</div>
         </div>
       </div>
     );
